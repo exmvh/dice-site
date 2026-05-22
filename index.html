@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Dice Roller</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#ffffff;
+    color:#222;
+    min-height:100vh;
+}
+
+.topbar{
+    width:100%;
+    padding:18px;
+    border-bottom:1px solid #e5e5e5;
+    text-align:center;
+    font-size:28px;
+    font-weight:700;
+    user-select:none;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin-top:30px;
+}
+
+select{
+    padding:10px 14px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    background:#2d7ef7;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#diceArea{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:22px;
+    padding:40px 20px;
+}
+
+.dice{
+    width:95px;
+    height:95px;
+    border-radius:22px;
+    position:relative;
+    animation:roll .2s ease;
+    box-shadow:
+        inset 0 -8px rgba(0,0,0,.12),
+        0 4px 10px rgba(0,0,0,.08);
+}
+
+@keyframes roll{
+    from{
+        transform:scale(.8) rotate(-8deg);
+        opacity:0;
+    }
+    to{
+        transform:scale(1) rotate(0);
+        opacity:1;
+    }
+}
+
+.dot{
+    width:14px;
+    height:14px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+}
+
+#secretMenu{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:220px;
+    background:white;
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    display:none;
+    z-index:999;
+}
+
+#secretMenu h3{
+    margin-bottom:12px;
+    font-size:17px;
+}
+
+#secretMenu label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:8px 0;
+    font-size:15px;
+}
+
+.hint{
+    text-align:center;
+    margin-top:12px;
+    color:#999;
+    font-size:12px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">Color Dice Roller</div>
+
+<div class="controls">
+
+<select id="diceCount">
+<option value="1">1 Dice</option>
+<option value="2">2 Dice</option>
+<option value="3">3 Dice</option>
+<option value="4" selected>4 Dice</option>
+<option value="5">5 Dice</option>
+<option value="6">6 Dice</option>
+</select>
+
+<button onclick="rollDice()">Roll Dice</button>
+
+</div>
+
+<div class="hint">
+Tap the title 5 times fast for hidden settings
+</div>
+
+<div id="diceArea"></div>
+
+<div id="secretMenu">
+
+<h3>Hidden Color Filter</h3>
+
+<label><input type="checkbox" value="red" checked> Red</label>
+<label><input type="checkbox" value="blue" checked> Blue</label>
+<label><input type="checkbox" value="green" checked> Green</label>
+<label><input type="checkbox" value="yellow" checked> Yellow</label>
+<label><input type="checkbox" value="purple" checked> Purple</label>
+<label><input type="checkbox" value="orange" checked> Orange</label>
+
+</div>
+
+<script>
+
+const colors = {
+    red:"#ff4d4d",
+    blue:"#4d79ff",
+    green:"#39d353",
+    yellow:"#ffd93d",
+    purple:"#b266ff",
+    orange:"#ff9933"
+};
+
+function enabledColors(){
+    return [...document.querySelectorAll("#secretMenu input")]
+    .filter(x => x.checked)
+    .map(x => x.value);
+}
+
+function createDots(dice){
+
+    const positions = {
+        1:[[40,40]],
+        2:[[20,20],[60,60]],
+        3:[[20,20],[40,40],[60,60]],
+        4:[[20,20],[60,20],[20,60],[60,60]],
+        5:[[20,20],[60,20],[40,40],[20,60],[60,60]],
+        6:[[20,20],[60,20],[20,40],[60,40],[20,60],[60,60]]
+    };
+
+    const number = Math.floor(Math.random()*6)+1;
+
+    positions[number].forEach(pos=>{
+
+        const dot = document.createElement("div");
+
+        dot.className = "dot";
+
+        dot.style.left = pos[0]+"px";
+        dot.style.top = pos[1]+"px";
+
+        dice.appendChild(dot);
+
+    });
+
+}
+
+function rollDice(){
+
+    const allowed = enabledColors();
+
+    if(allowed.length === 0){
+        alert("Enable at least one color.");
+        return;
+    }
+
+    const count = Number(document.getElementById("diceCount").value);
+
+    const area = document.getElementById("diceArea");
+
+    area.innerHTML = "";
+
+    for(let i=0;i<count;i++){
+
+        const color =
+            allowed[Math.floor(Math.random()*allowed.length)];
+
+        const dice = document.createElement("div");
+
+        dice.className = "dice";
+
+        dice.style.background = colors[color];
+
+        createDots(dice);
+
+        area.appendChild(dice);
+
+    }
+
+}
+
+function toggleMenu(){
+
+    const menu = document.getElementById("secretMenu");
+
+    menu.style.display =
+        menu.style.display==="block"
+        ? "none"
+        : "block";
+}
+
+document.addEventListener("keydown",e=>{
+
+    if(e.shiftKey && e.key.toLowerCase()==="d"){
+        toggleMenu();
+    }
+
+});
+
+let taps = 0;
+
+document.querySelector(".topbar").addEventListener("click",()=>{
+
+    taps++;
+
+    if(taps >= 5){
+        toggleMenu();
+        taps = 0;
+    }
+
+    setTimeout(()=>{
+        taps = 0;
+    },1500);
+
+});
+
+rollDice();
+
+</script>
+
+</body>
+</html>
