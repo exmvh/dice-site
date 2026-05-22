@@ -4,12 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Online Dice</title>
+<title>Online Dice - Virtual Dice Simulator</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -17,137 +16,98 @@
 }
 
 body{
-    font-family:Arial, sans-serif;
-    background:#49a8ff;
-    overflow-x:hidden;
-    min-height:100vh;
-}
-
-/* BACKGROUND PATTERN */
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
     background:
-    radial-gradient(rgba(255,255,255,.08) 2px, transparent 2px);
-    background-size:42px 42px;
-    opacity:.45;
-    pointer-events:none;
+    linear-gradient(rgba(0,140,255,.75),rgba(0,140,255,.75)),
+    url("https://www.transparenttextures.com/patterns/cubes.png");
+    background-size:300px;
+    font-family:Arial, sans-serif;
+    min-height:100vh;
+    color:white;
 }
 
-/* MAIN */
-
-.main{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:30px 15px 100px;
+.container{
+    width:95%;
+    max-width:1100px;
+    margin:auto;
+    padding:30px 0 80px;
 }
-
-/* LOGO */
 
 .logo{
-    text-align:center;
-    margin-bottom:25px;
-    user-select:none;
+    display:block;
+    margin:auto;
+    width:430px;
+    max-width:95%;
 }
-
-.logo-title{
-    font-family:'Luckiest Guy', cursive;
-    font-size:78px;
-    color:#ffc928;
-    letter-spacing:3px;
-    text-shadow:
-        0 3px 0 #c78300,
-        0 6px 0 #9c5f00,
-        0 0 12px rgba(255,255,255,.4);
-}
-
-.logo-sub{
-    margin-top:-10px;
-    font-family:'Luckiest Guy', cursive;
-    color:white;
-    font-size:34px;
-    text-shadow:0 4px rgba(0,0,0,.15);
-}
-
-/* TOP BOX */
 
 .card{
-    width:100%;
-    max-width:780px;
-    background:rgba(255,255,255,.10);
-    border:4px solid rgba(255,255,255,.35);
+    margin:35px auto;
+    background:rgba(255,255,255,.12);
+    border:4px solid rgba(255,255,255,.25);
     border-radius:24px;
     padding:28px;
-    backdrop-filter:blur(3px);
-    box-shadow:0 8px 30px rgba(0,0,0,.15);
+    backdrop-filter:blur(4px);
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
-/* TITLE */
+.main-card{
+    max-width:720px;
+}
 
-.roll-title{
+.history-card{
+    max-width:720px;
+}
+
+.title{
     font-family:'Luckiest Guy', cursive;
-    color:white;
-    font-size:46px;
     text-align:center;
+    font-size:44px;
+    letter-spacing:2px;
+    text-shadow:4px 4px 0 rgba(0,0,0,.15);
     margin-bottom:20px;
-    text-shadow:0 4px rgba(0,0,0,.15);
 }
-
-/* DROPDOWNS */
 
 .controls{
     display:flex;
+    gap:12px;
     justify-content:center;
-    gap:14px;
     flex-wrap:wrap;
     margin-bottom:28px;
 }
 
-.controls select{
-    height:54px;
+select{
+    padding:14px 18px;
     border:none;
-    outline:none;
-    border-radius:8px;
+    border-radius:12px;
+    font-weight:bold;
+    font-size:18px;
     background:white;
-    color:#1f7cff;
-    padding:0 16px;
-    font-size:24px;
+    color:#1881ff;
     font-family:'Luckiest Guy', cursive;
-    box-shadow:0 4px rgba(0,0,0,.12);
 }
 
-/* DICE ROW */
-
-.dice-wrap{
+.dice-area{
     display:flex;
     justify-content:center;
-    align-items:center;
-    gap:20px;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    margin-bottom:30px;
-    padding-bottom:5px;
+    gap:22px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
 }
 
-/* DICE */
-
-.dice{
+.die{
     width:120px;
     height:120px;
-    border-radius:18px;
+    border-radius:22px;
     border:8px solid white;
     position:relative;
-    box-shadow:0 6px 18px rgba(0,0,0,.18);
-    flex-shrink:0;
+    box-shadow:
+    inset 0 -8px 0 rgba(0,0,0,.15),
+    0 8px 15px rgba(0,0,0,.25);
+    transition:.25s;
 }
 
 .dot{
-    width:22px;
-    height:22px;
+    width:20px;
+    height:20px;
     background:white;
     border-radius:50%;
     position:absolute;
@@ -156,418 +116,374 @@ body::before{
     transform:translate(-50%,-50%);
 }
 
-/* COLORS */
+.roll-animation{
+    animation:roll .7s ease;
+}
 
-.red{ background:#ff1c1c; }
-.orange{ background:#ff9f00; }
-.yellow{ background:#ffd400; }
-.green{ background:#0c9f00; }
-.blue{ background:#1b14ff; }
-.purple{ background:#9800a8; }
-
-/* BUTTON */
+@keyframes roll{
+    0%{
+        transform:rotate(0deg) scale(1);
+    }
+    25%{
+        transform:rotate(90deg) scale(.8);
+    }
+    50%{
+        transform:rotate(180deg) scale(1.1);
+    }
+    75%{
+        transform:rotate(270deg) scale(.9);
+    }
+    100%{
+        transform:rotate(360deg) scale(1);
+    }
+}
 
 .roll-btn{
     width:100%;
-    height:90px;
-    background:#ffe100;
-    border-radius:10px;
-    border:4px solid rgba(255,255,255,.7);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-
-    font-family:'Luckiest Guy', cursive;
+    border:none;
+    border-radius:14px;
+    background:#ffe500;
     color:white;
-    font-size:52px;
+    font-family:'Luckiest Guy', cursive;
+    font-size:42px;
+    padding:18px;
+    cursor:pointer;
+    text-shadow:3px 3px 0 rgba(0,0,0,.2);
+    border:5px solid rgba(255,255,255,.6);
+    box-shadow:0 6px 0 #d0ba00;
+    transition:.15s;
+}
 
-    text-shadow:0 4px rgba(0,0,0,.18);
-    box-shadow:0 6px rgba(0,0,0,.12);
-
-    margin-bottom:18px;
+.roll-btn:hover{
+    transform:translateY(-2px);
 }
 
 .roll-btn:active{
-    transform:translateY(2px);
+    transform:translateY(5px);
+    box-shadow:none;
 }
-
-/* INFO */
 
 .info{
-    width:100%;
-    background:rgba(255,255,255,.18);
-    border-radius:10px;
-    padding:14px;
+    margin-top:18px;
     text-align:center;
-    color:white;
-    font-size:26px;
-    line-height:1.5;
+    font-size:20px;
+    line-height:1.6;
 }
 
-.info span{
-    font-weight:bold;
-}
-
-/* HISTORY */
-
-.history{
-    width:100%;
-    max-width:780px;
-    margin-top:28px;
-
-    background:rgba(255,255,255,.10);
-    border:4px solid rgba(255,255,255,.35);
-    border-radius:24px;
-    padding:28px;
-}
+.red{color:red;}
+.orange{color:orange;}
+.yellow{color:yellow;}
+.green{color:green;}
+.blue{color:blue;}
+.purple{color:purple;}
 
 .history-title{
-    text-align:center;
-    color:white;
     font-family:'Luckiest Guy', cursive;
-    font-size:52px;
+    text-align:center;
+    font-size:54px;
     margin-bottom:25px;
-    text-shadow:0 4px rgba(0,0,0,.15);
+    text-shadow:4px 4px 0 rgba(0,0,0,.15);
 }
 
-.roll-row{
+.history-item{
     display:flex;
     align-items:center;
-    gap:12px;
-    border-bottom:2px dashed rgba(255,255,255,.6);
-    padding:16px 0;
+    gap:18px;
+    padding:18px 0;
+    border-bottom:2px dashed rgba(255,255,255,.4);
 }
 
 .roll-number{
-    color:white;
-    font-size:34px;
-    font-weight:bold;
-    width:45px;
+    font-size:40px;
+    font-family:'Luckiest Guy', cursive;
+    width:60px;
 }
 
-.small-dice{
-    width:56px;
-    height:56px;
+.history-dice{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.small-die{
+    width:42px;
+    height:42px;
     border-radius:10px;
     border:4px solid white;
     position:relative;
 }
 
-.small-dice .dot{
-    width:12px;
-    height:12px;
+.small-die .dot{
+    width:9px;
+    height:9px;
 }
 
-.note{
-    color:white;
-    font-size:24px;
-    margin-top:24px;
-    line-height:1.5;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-.logo-title{
-    font-size:52px;
-}
-
-.logo-sub{
-    font-size:22px;
-}
-
-.card,
-.history{
-    padding:18px;
+.secret-menu{
+    display:none;
+    margin-top:25px;
+    background:rgba(0,0,0,.25);
+    padding:20px;
     border-radius:18px;
 }
 
-.roll-title{
-    font-size:32px;
+.secret-menu h2{
+    margin-bottom:15px;
+    font-family:'Luckiest Guy', cursive;
+    letter-spacing:1px;
 }
 
-.controls{
-    gap:8px;
+.secret-menu button{
+    padding:12px 16px;
+    border:none;
+    border-radius:10px;
+    margin:5px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.controls select{
-    font-size:18px;
-    height:46px;
-}
+@media(max-width:700px){
 
-.dice-wrap{
-    gap:12px;
-}
+    .die{
+        width:85px;
+        height:85px;
+        border-width:6px;
+    }
 
-.dice{
-    width:76px;
-    height:76px;
-    border-width:5px;
-}
+    .title{
+        font-size:34px;
+    }
 
-.dot{
-    width:16px;
-    height:16px;
-}
+    .history-title{
+        font-size:40px;
+    }
 
-.roll-btn{
-    height:70px;
-    font-size:34px;
-}
+    .roll-btn{
+        font-size:30px;
+    }
 
-.info{
-    font-size:18px;
-}
+    .controls{
+        flex-direction:column;
+    }
 
-.history-title{
-    font-size:38px;
-}
+    select{
+        width:100%;
+    }
 
-.roll-number{
-    font-size:26px;
+    .dice-area{
+        gap:14px;
+    }
 }
-
-.small-dice{
-    width:42px;
-    height:42px;
-}
-
-.note{
-    font-size:18px;
-}
-
-}
-
 </style>
 </head>
 <body>
 
-<div class="main">
+<div class="container">
 
-    <div class="logo">
-        <div class="logo-title">ONLINE DICE</div>
-        <div class="logo-sub">VIRTUAL DICE SIMULATOR</div>
-    </div>
+<img class="logo" src="https://www.online-dice.com/img/logo-online-dice.png">
 
-    <div class="card">
+<div class="card main-card">
 
-        <div class="roll-title">
-            ROLL COLOR DICE
-        </div>
+<h1 class="title">ROLL COLOR DICE</h1>
 
-        <div class="controls">
+<div class="controls">
 
-            <select>
-                <option>4 DICE</option>
-            </select>
+<select id="diceCount">
+<option value="1">1 DICE</option>
+<option value="2">2 DICE</option>
+<option value="3">3 DICE</option>
+<option value="4" selected>4 DICE</option>
+<option value="5">5 DICE</option>
+<option value="6">6 DICE</option>
+</select>
 
-            <select>
-                <option>COLOR DICE</option>
-            </select>
+<select id="mode">
+<option>COLOR DICE</option>
+</select>
 
-            <select>
-                <option>SELECT 1</option>
-            </select>
+<select id="selectMode">
+<option>SELECT 1</option>
+</select>
 
-        </div>
+</div>
 
-        <div class="dice-wrap" id="diceWrap"></div>
+<div class="dice-area" id="diceArea"></div>
 
-        <div class="roll-btn" onclick="rollDice()">
-            ROLL AGAIN !
-        </div>
+<button class="roll-btn" onclick="rollDice()">
+ROLL AGAIN !
+</button>
 
-        <div class="info">
-            Possible colors are:
-            <span style="color:red">Red</span>,
-            <span style="color:orange">Orange</span>,
-            <span style="color:gold">Yellow</span>,
-            <span style="color:green">Green</span>,
-            <span style="color:blue">Blue</span>
-            and
-            <span style="color:purple">Purple</span>.
-        </div>
+<div class="info">
+Possible colors are:
+<span class="red">Red</span>,
+<span class="orange">Orange</span>,
+<span class="yellow">Yellow</span>,
+<span class="green">Green</span>,
+<span class="blue">Blue</span>
+and
+<span class="purple">Purple</span>.
+</div>
 
-    </div>
+<div class="secret-menu" id="secretMenu">
 
-    <div class="history">
+<h2>Secret Menu</h2>
 
-        <div class="history-title">
-            YOUR LAST 20 ROLLS:
-        </div>
+<p style="margin-bottom:15px;">
+Choose what color shows up more often.
+</p>
 
-        <div id="historyList"></div>
+<button onclick="setRig('red')">Red</button>
+<button onclick="setRig('orange')">Orange</button>
+<button onclick="setRig('yellow')">Yellow</button>
+<button onclick="setRig('green')">Green</button>
+<button onclick="setRig('blue')">Blue</button>
+<button onclick="setRig('purple')">Purple</button>
+<button onclick="setRig(null)">Normal</button>
 
-        <div class="note">
-            Please note: only dice rolls with up to 6 dice are saved.
-        </div>
+</div>
 
-    </div>
+</div>
+
+<div class="card history-card">
+
+<h1 class="history-title">YOUR LAST 20 ROLLS:</h1>
+
+<div id="history"></div>
+
+</div>
 
 </div>
 
 <script>
 
-const allColors = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "purple"
+const colors = [
+"red",
+"orange",
+"yellow",
+"green",
+"blue",
+"purple"
 ];
 
-let disabledColors = [];
-let history = [];
+let historyRolls = [];
+let riggedColor = null;
 
-/* AVAILABLE COLORS */
+const diceArea = document.getElementById("diceArea");
+const historyDiv = document.getElementById("history");
 
-function availableColors(){
-    return allColors.filter(c => !disabledColors.includes(c));
-}
+function createDie(color){
 
-/* CREATE DICE */
-
-function createDice(color, small=false){
-
-    const dice = document.createElement("div");
-
-    dice.className = `${small ? 'small-dice' : 'dice'} ${color}`;
+    const die = document.createElement("div");
+    die.className = "die";
+    die.style.background = color;
 
     const dot = document.createElement("div");
     dot.className = "dot";
 
-    dice.appendChild(dot);
+    die.appendChild(dot);
 
-    return dice;
+    return die;
 }
 
-/* ROLL */
+function createSmallDie(color){
+
+    return `
+    <div class="small-die" style="background:${color}">
+        <div class="dot"></div>
+    </div>
+    `;
+}
+
+function getRandomColor(){
+
+    if(riggedColor && Math.random() < 0.55){
+        return riggedColor;
+    }
+
+    return colors[Math.floor(Math.random() * colors.length)];
+}
 
 function rollDice(){
 
-    const wrap = document.getElementById("diceWrap");
+    diceArea.innerHTML = "";
 
-    wrap.innerHTML = "";
+    const count = parseInt(
+        document.getElementById("diceCount").value
+    );
 
-    const colors = availableColors();
+    const roll = [];
 
-    let currentRoll = [];
+    for(let i=0;i<count;i++){
 
-    for(let i=0;i<4;i++){
+        const color = getRandomColor();
 
-        const color =
-            colors[Math.floor(Math.random()*colors.length)];
+        roll.push(color);
 
-        currentRoll.push(color);
+        const die = createDie(color);
 
-        wrap.appendChild(createDice(color));
+        die.classList.add("roll-animation");
 
+        diceArea.appendChild(die);
     }
 
-    history.unshift(currentRoll);
+    historyRolls.unshift(roll);
 
-    if(history.length > 20){
-        history.pop();
+    if(historyRolls.length > 20){
+        historyRolls.pop();
     }
 
     updateHistory();
-
 }
-
-/* HISTORY */
 
 function updateHistory(){
 
-    const historyList =
-        document.getElementById("historyList");
+    historyDiv.innerHTML = "";
 
-    historyList.innerHTML = "";
-
-    history.forEach((roll,index)=>{
+    historyRolls.forEach((roll,index)=>{
 
         const row = document.createElement("div");
-        row.className = "roll-row";
+        row.className = "history-item";
 
-        const number = document.createElement("div");
-        number.className = "roll-number";
-        number.textContent = (index + 1) + ".";
+        row.innerHTML = `
+        <div class="roll-number">${index+1}.</div>
 
-        row.appendChild(number);
+        <div class="history-dice">
+            ${roll.map(c=>createSmallDie(c)).join("")}
+        </div>
+        `;
 
-        roll.forEach(color=>{
-
-            row.appendChild(
-                createDice(color,true)
-            );
-
-        });
-
-        historyList.appendChild(row);
-
+        historyDiv.appendChild(row);
     });
-
 }
 
-/* SECRET MENU */
-/* HOLD LOGO FOR 3 SECONDS */
+function setRig(color){
 
-let holdTimer;
+    riggedColor = color;
 
-document.querySelector(".logo").addEventListener("touchstart", ()=>{
-
-    holdTimer = setTimeout(openSecretMenu,3000);
-
-});
-
-document.querySelector(".logo").addEventListener("touchend", ()=>{
-
-    clearTimeout(holdTimer);
-
-});
-
-document.querySelector(".logo").addEventListener("mousedown", ()=>{
-
-    holdTimer = setTimeout(openSecretMenu,3000);
-
-});
-
-document.querySelector(".logo").addEventListener("mouseup", ()=>{
-
-    clearTimeout(holdTimer);
-
-});
-
-/* SECRET SETTINGS */
-
-function openSecretMenu(){
-
-    let current = disabledColors.join(", ");
-
-    let answer = prompt(
-`Hidden Color Settings
-
-Type colors to DISABLE separated by commas.
-
-Example:
-red, blue
-
-Current disabled:
-${current || "none"}`
-    );
-
-    if(answer === null) return;
-
-    disabledColors = answer
-        .split(",")
-        .map(x=>x.trim().toLowerCase())
-        .filter(x=>allColors.includes(x));
-
+    if(color){
+        alert("Rigged toward " + color);
+    }else{
+        alert("Normal mode enabled");
+    }
 }
 
-/* FIRST LOAD */
+let tapCount = 0;
+
+document.querySelector(".logo").addEventListener("click",()=>{
+
+    tapCount++;
+
+    if(tapCount >= 5){
+
+        document.getElementById("secretMenu").style.display = "block";
+
+        tapCount = 0;
+    }
+
+    setTimeout(()=>{
+        tapCount = 0;
+    },2000);
+
+});
 
 rollDice();
 
