@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -16,65 +17,132 @@
 }
 
 body{
-    background:#39a2ff;
     font-family:Arial, sans-serif;
+    background:#49a8ff;
     overflow-x:hidden;
+    min-height:100vh;
 }
 
-/* BACKGROUND */
+/* BACKGROUND PATTERN */
+
 body::before{
     content:"";
     position:fixed;
     inset:0;
     background:
     radial-gradient(rgba(255,255,255,.08) 2px, transparent 2px);
-    background-size:40px 40px;
-    opacity:.5;
+    background-size:42px 42px;
+    opacity:.45;
     pointer-events:none;
 }
 
-/* HEADER */
-.header{
-    text-align:center;
-    padding-top:20px;
+/* MAIN */
+
+.main{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:30px 15px 100px;
 }
+
+/* LOGO */
 
 .logo{
-    font-family:'Luckiest Guy', cursive;
-    font-size:72px;
-    color:#ffc928;
-    text-shadow:
-        0 3px 0 #c97f00,
-        0 6px 0 #9e6200,
-        0 0 15px rgba(255,255,255,.5);
-    letter-spacing:3px;
+    text-align:center;
+    margin-bottom:25px;
+    user-select:none;
 }
 
-.sub{
+.logo-title{
+    font-family:'Luckiest Guy', cursive;
+    font-size:78px;
+    color:#ffc928;
+    letter-spacing:3px;
+    text-shadow:
+        0 3px 0 #c78300,
+        0 6px 0 #9c5f00,
+        0 0 12px rgba(255,255,255,.4);
+}
+
+.logo-sub{
+    margin-top:-10px;
     font-family:'Luckiest Guy', cursive;
     color:white;
     font-size:34px;
-    margin-top:-8px;
     text-shadow:0 4px rgba(0,0,0,.15);
 }
 
-/* DICE */
+/* TOP BOX */
+
+.card{
+    width:100%;
+    max-width:780px;
+    background:rgba(255,255,255,.10);
+    border:4px solid rgba(255,255,255,.35);
+    border-radius:24px;
+    padding:28px;
+    backdrop-filter:blur(3px);
+    box-shadow:0 8px 30px rgba(0,0,0,.15);
+}
+
+/* TITLE */
+
+.roll-title{
+    font-family:'Luckiest Guy', cursive;
+    color:white;
+    font-size:46px;
+    text-align:center;
+    margin-bottom:20px;
+    text-shadow:0 4px rgba(0,0,0,.15);
+}
+
+/* DROPDOWNS */
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+}
+
+.controls select{
+    height:54px;
+    border:none;
+    outline:none;
+    border-radius:8px;
+    background:white;
+    color:#1f7cff;
+    padding:0 16px;
+    font-size:24px;
+    font-family:'Luckiest Guy', cursive;
+    box-shadow:0 4px rgba(0,0,0,.12);
+}
+
+/* DICE ROW */
+
 .dice-wrap{
     display:flex;
     justify-content:center;
-    gap:24px;
-    flex-wrap:wrap;
-    margin-top:50px;
-    padding:0 20px;
+    align-items:center;
+    gap:20px;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    margin-bottom:30px;
+    padding-bottom:5px;
 }
 
+/* DICE */
+
 .dice{
-    width:130px;
-    height:130px;
+    width:120px;
+    height:120px;
     border-radius:18px;
     border:8px solid white;
     position:relative;
-    box-shadow:0 5px 15px rgba(0,0,0,.25);
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+    flex-shrink:0;
 }
 
 .dot{
@@ -88,49 +156,53 @@ body::before{
     transform:translate(-50%,-50%);
 }
 
-.red{ background:#ff1818; }
+/* COLORS */
+
+.red{ background:#ff1c1c; }
 .orange{ background:#ff9f00; }
 .yellow{ background:#ffd400; }
-.green{ background:#0aa000; }
-.blue{ background:#1d14ff; }
+.green{ background:#0c9f00; }
+.blue{ background:#1b14ff; }
 .purple{ background:#9800a8; }
 
 /* BUTTON */
+
 .roll-btn{
-    width:90%;
-    max-width:720px;
-    height:95px;
-    margin:45px auto 25px;
+    width:100%;
+    height:90px;
+    background:#ffe100;
+    border-radius:10px;
+    border:4px solid rgba(255,255,255,.7);
     display:flex;
-    justify-content:center;
     align-items:center;
-    background:#ffd800;
-    border-radius:12px;
-    border:4px solid rgba(255,255,255,.8);
-    font-family:'Luckiest Guy', cursive;
-    font-size:54px;
-    color:white;
+    justify-content:center;
     cursor:pointer;
+
+    font-family:'Luckiest Guy', cursive;
+    color:white;
+    font-size:52px;
+
     text-shadow:0 4px rgba(0,0,0,.18);
     box-shadow:0 6px rgba(0,0,0,.12);
+
+    margin-bottom:18px;
 }
 
 .roll-btn:active{
     transform:translateY(2px);
 }
 
-/* TEXT */
+/* INFO */
+
 .info{
-    margin:30px auto;
-    width:92%;
-    max-width:900px;
-    background:rgba(255,255,255,.15);
-    border-radius:12px;
-    padding:20px;
-    color:white;
-    font-size:28px;
+    width:100%;
+    background:rgba(255,255,255,.18);
+    border-radius:10px;
+    padding:14px;
     text-align:center;
-    line-height:1.6;
+    color:white;
+    font-size:26px;
+    line-height:1.5;
 }
 
 .info span{
@@ -138,19 +210,25 @@ body::before{
 }
 
 /* HISTORY */
+
 .history{
-    width:92%;
-    max-width:900px;
-    margin:40px auto 100px;
+    width:100%;
+    max-width:780px;
+    margin-top:28px;
+
+    background:rgba(255,255,255,.10);
+    border:4px solid rgba(255,255,255,.35);
+    border-radius:24px;
+    padding:28px;
 }
 
 .history-title{
-    font-family:'Luckiest Guy', cursive;
-    color:white;
-    font-size:58px;
     text-align:center;
-    margin-bottom:30px;
-    text-shadow:0 5px rgba(0,0,0,.12);
+    color:white;
+    font-family:'Luckiest Guy', cursive;
+    font-size:52px;
+    margin-bottom:25px;
+    text-shadow:0 4px rgba(0,0,0,.15);
 }
 
 .roll-row{
@@ -158,93 +236,180 @@ body::before{
     align-items:center;
     gap:12px;
     border-bottom:2px dashed rgba(255,255,255,.6);
-    padding:18px 0;
+    padding:16px 0;
 }
 
 .roll-number{
     color:white;
-    font-size:40px;
-    width:50px;
+    font-size:34px;
     font-weight:bold;
+    width:45px;
 }
 
 .small-dice{
-    width:70px;
-    height:70px;
-    border-radius:12px;
-    border:5px solid white;
+    width:56px;
+    height:56px;
+    border-radius:10px;
+    border:4px solid white;
     position:relative;
 }
 
 .small-dice .dot{
-    width:14px;
-    height:14px;
+    width:12px;
+    height:12px;
+}
+
+.note{
+    color:white;
+    font-size:24px;
+    margin-top:24px;
+    line-height:1.5;
 }
 
 /* MOBILE */
+
 @media(max-width:700px){
 
-.logo{
-    font-size:54px;
+.logo-title{
+    font-size:52px;
 }
 
-.sub{
-    font-size:24px;
-}
-
-.dice{
-    width:90px;
-    height:90px;
-    border-width:6px;
-}
-
-.roll-btn{
-    font-size:40px;
-    height:80px;
-}
-
-.history-title{
-    font-size:44px;
-}
-
-.info{
+.logo-sub{
     font-size:22px;
 }
 
+.card,
+.history{
+    padding:18px;
+    border-radius:18px;
 }
+
+.roll-title{
+    font-size:32px;
+}
+
+.controls{
+    gap:8px;
+}
+
+.controls select{
+    font-size:18px;
+    height:46px;
+}
+
+.dice-wrap{
+    gap:12px;
+}
+
+.dice{
+    width:76px;
+    height:76px;
+    border-width:5px;
+}
+
+.dot{
+    width:16px;
+    height:16px;
+}
+
+.roll-btn{
+    height:70px;
+    font-size:34px;
+}
+
+.info{
+    font-size:18px;
+}
+
+.history-title{
+    font-size:38px;
+}
+
+.roll-number{
+    font-size:26px;
+}
+
+.small-dice{
+    width:42px;
+    height:42px;
+}
+
+.note{
+    font-size:18px;
+}
+
+}
+
 </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="logo">ONLINE DICE</div>
-    <div class="sub">VIRTUAL DICE SIMULATOR</div>
-</div>
+<div class="main">
 
-<div class="dice-wrap" id="diceWrap"></div>
+    <div class="logo">
+        <div class="logo-title">ONLINE DICE</div>
+        <div class="logo-sub">VIRTUAL DICE SIMULATOR</div>
+    </div>
 
-<div class="roll-btn" onclick="rollDice()">
-    ROLL AGAIN !
-</div>
+    <div class="card">
 
-<div class="info">
-    Possible colors are:
-    <span style="color:red">Red</span>,
-    <span style="color:orange">Orange</span>,
-    <span style="color:gold">Yellow</span>,
-    <span style="color:green">Green</span>,
-    <span style="color:blue">Blue</span>
-    and
-    <span style="color:purple">Purple</span>.
-</div>
+        <div class="roll-title">
+            ROLL COLOR DICE
+        </div>
 
-<div class="history">
-    <div class="history-title">YOUR LAST 20 ROLLS:</div>
+        <div class="controls">
 
-    <div id="historyList"></div>
+            <select>
+                <option>4 DICE</option>
+            </select>
+
+            <select>
+                <option>COLOR DICE</option>
+            </select>
+
+            <select>
+                <option>SELECT 1</option>
+            </select>
+
+        </div>
+
+        <div class="dice-wrap" id="diceWrap"></div>
+
+        <div class="roll-btn" onclick="rollDice()">
+            ROLL AGAIN !
+        </div>
+
+        <div class="info">
+            Possible colors are:
+            <span style="color:red">Red</span>,
+            <span style="color:orange">Orange</span>,
+            <span style="color:gold">Yellow</span>,
+            <span style="color:green">Green</span>,
+            <span style="color:blue">Blue</span>
+            and
+            <span style="color:purple">Purple</span>.
+        </div>
+
+    </div>
+
+    <div class="history">
+
+        <div class="history-title">
+            YOUR LAST 20 ROLLS:
+        </div>
+
+        <div id="historyList"></div>
+
+        <div class="note">
+            Please note: only dice rolls with up to 6 dice are saved.
+        </div>
+
+    </div>
+
 </div>
 
 <script>
+
 const allColors = [
     "red",
     "orange",
@@ -257,12 +422,18 @@ const allColors = [
 let disabledColors = [];
 let history = [];
 
+/* AVAILABLE COLORS */
+
 function availableColors(){
     return allColors.filter(c => !disabledColors.includes(c));
 }
 
+/* CREATE DICE */
+
 function createDice(color, small=false){
+
     const dice = document.createElement("div");
+
     dice.className = `${small ? 'small-dice' : 'dice'} ${color}`;
 
     const dot = document.createElement("div");
@@ -273,9 +444,12 @@ function createDice(color, small=false){
     return dice;
 }
 
+/* ROLL */
+
 function rollDice(){
 
     const wrap = document.getElementById("diceWrap");
+
     wrap.innerHTML = "";
 
     const colors = availableColors();
@@ -284,11 +458,13 @@ function rollDice(){
 
     for(let i=0;i<4;i++){
 
-        const color = colors[Math.floor(Math.random()*colors.length)];
+        const color =
+            colors[Math.floor(Math.random()*colors.length)];
 
         currentRoll.push(color);
 
         wrap.appendChild(createDice(color));
+
     }
 
     history.unshift(currentRoll);
@@ -298,11 +474,16 @@ function rollDice(){
     }
 
     updateHistory();
+
 }
+
+/* HISTORY */
 
 function updateHistory(){
 
-    const historyList = document.getElementById("historyList");
+    const historyList =
+        document.getElementById("historyList");
+
     historyList.innerHTML = "";
 
     history.forEach((roll,index)=>{
@@ -312,12 +493,16 @@ function updateHistory(){
 
         const number = document.createElement("div");
         number.className = "roll-number";
-        number.textContent = (index+1)+".";
+        number.textContent = (index + 1) + ".";
 
         row.appendChild(number);
 
         roll.forEach(color=>{
-            row.appendChild(createDice(color,true));
+
+            row.appendChild(
+                createDice(color,true)
+            );
+
         });
 
         historyList.appendChild(row);
@@ -326,34 +511,36 @@ function updateHistory(){
 
 }
 
-/* HIDDEN SECRET MENU */
-/* HOLD TOP TITLE FOR 3 SECONDS */
+/* SECRET MENU */
+/* HOLD LOGO FOR 3 SECONDS */
 
 let holdTimer;
 
-document.querySelector(".logo").addEventListener("touchstart", () => {
+document.querySelector(".logo").addEventListener("touchstart", ()=>{
 
-    holdTimer = setTimeout(openSecretMenu, 3000);
+    holdTimer = setTimeout(openSecretMenu,3000);
 
 });
 
-document.querySelector(".logo").addEventListener("touchend", () => {
+document.querySelector(".logo").addEventListener("touchend", ()=>{
 
     clearTimeout(holdTimer);
 
 });
 
-document.querySelector(".logo").addEventListener("mousedown", () => {
+document.querySelector(".logo").addEventListener("mousedown", ()=>{
 
-    holdTimer = setTimeout(openSecretMenu, 3000);
+    holdTimer = setTimeout(openSecretMenu,3000);
 
 });
 
-document.querySelector(".logo").addEventListener("mouseup", () => {
+document.querySelector(".logo").addEventListener("mouseup", ()=>{
 
     clearTimeout(holdTimer);
 
 });
+
+/* SECRET SETTINGS */
 
 function openSecretMenu(){
 
@@ -380,8 +567,10 @@ ${current || "none"}`
 
 }
 
-/* FIRST ROLL */
+/* FIRST LOAD */
+
 rollDice();
+
 </script>
 
 </body>
