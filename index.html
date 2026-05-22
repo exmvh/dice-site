@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Online Dice - Virtual Dice Simulator</title>
+<title>Online Dice</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -16,476 +17,399 @@
 }
 
 body{
-    background:
-    linear-gradient(rgba(0,140,255,.75),rgba(0,140,255,.75)),
-    url("https://www.transparenttextures.com/patterns/cubes.png");
-    background-size:300px;
     font-family:Arial, sans-serif;
+    background:
+    linear-gradient(rgba(70,170,255,.78),rgba(40,145,255,.88)),
+    url('https://www.transparenttextures.com/patterns/cubes.png');
     min-height:100vh;
     color:white;
+    overflow-x:hidden;
 }
 
-.container{
-    width:95%;
-    max-width:1100px;
-    margin:auto;
-    padding:30px 0 80px;
+/* TOP */
+
+.top{
+    text-align:center;
+    padding-top:35px;
+    margin-bottom:25px;
 }
 
 .logo{
-    display:block;
+    font-family:'Luckiest Guy', cursive;
+    font-size:64px;
+    color:#ffcf3a;
+    text-shadow:
+    0 2px 0 #c78200,
+    0 4px 0 #c78200,
+    0 6px 10px rgba(0,0,0,.2);
+    letter-spacing:3px;
+}
+
+.subtitle{
+    font-family:'Luckiest Guy', cursive;
+    font-size:26px;
+    margin-top:5px;
+    color:white;
+    text-shadow:0 3px 0 rgba(0,0,0,.2);
+}
+
+/* MAIN BOX */
+
+.box{
+    width:95%;
+    max-width:420px;
     margin:auto;
-    width:430px;
-    max-width:95%;
-}
-
-.card{
-    margin:35px auto;
-    background:rgba(255,255,255,.12);
-    border:4px solid rgba(255,255,255,.25);
-    border-radius:24px;
-    padding:28px;
+    background:rgba(255,255,255,.08);
+    border:3px solid rgba(255,255,255,.25);
+    border-radius:20px;
+    padding:22px;
     backdrop-filter:blur(4px);
-    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
 }
 
-.main-card{
-    max-width:720px;
-}
-
-.history-card{
-    max-width:720px;
-}
-
-.title{
+.section-title{
     font-family:'Luckiest Guy', cursive;
     text-align:center;
-    font-size:44px;
-    letter-spacing:2px;
-    text-shadow:4px 4px 0 rgba(0,0,0,.15);
-    margin-bottom:20px;
+    font-size:28px;
+    margin-bottom:18px;
+    text-shadow:0 3px 0 rgba(0,0,0,.2);
 }
+
+/* SELECTS */
 
 .controls{
     display:flex;
-    gap:12px;
     justify-content:center;
-    flex-wrap:wrap;
-    margin-bottom:28px;
+    gap:10px;
+    margin-bottom:24px;
 }
 
 select{
-    padding:14px 18px;
+    padding:10px;
     border:none;
-    border-radius:12px;
+    border-radius:6px;
     font-weight:bold;
-    font-size:18px;
+    color:#1572ff;
     background:white;
-    color:#1881ff;
-    font-family:'Luckiest Guy', cursive;
+    font-size:15px;
 }
 
-.dice-area{
+/* DICE */
+
+.dice-container{
     display:flex;
     justify-content:center;
-    gap:22px;
-    flex-wrap:wrap;
+    align-items:center;
+    gap:16px;
+    flex-wrap:nowrap;
     margin-bottom:28px;
 }
 
-.die{
-    width:120px;
-    height:120px;
-    border-radius:22px;
-    border:8px solid white;
+.dice{
+    width:78px;
+    height:78px;
+    border-radius:14px;
+    border:6px solid white;
     position:relative;
-    box-shadow:
-    inset 0 -8px 0 rgba(0,0,0,.15),
-    0 8px 15px rgba(0,0,0,.25);
-    transition:.25s;
+    box-shadow:0 4px 0 rgba(0,0,0,.18);
+    transition:.15s;
+    flex-shrink:0;
 }
 
-.dot{
-    width:20px;
-    height:20px;
+.dice::after{
+    content:'';
+    position:absolute;
+    width:16px;
+    height:16px;
     background:white;
     border-radius:50%;
-    position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
 }
 
-.roll-animation{
-    animation:roll .7s ease;
+.blue{background:#1d12ff;}
+.green{background:#0d9800;}
+.red{background:#ff1f1f;}
+.orange{background:#ffae00;}
+.yellow{background:#ffd400;}
+.purple{background:#a000b3;}
+
+/* ROLL ANIMATION */
+
+.rolling{
+    animation:roll .45s ease;
 }
 
 @keyframes roll{
     0%{
-        transform:rotate(0deg) scale(1);
+        transform:scale(.8) rotate(0deg);
     }
-    25%{
-        transform:rotate(90deg) scale(.8);
-    }
-    50%{
-        transform:rotate(180deg) scale(1.1);
-    }
-    75%{
-        transform:rotate(270deg) scale(.9);
+    40%{
+        transform:scale(1.1) rotate(10deg);
     }
     100%{
-        transform:rotate(360deg) scale(1);
+        transform:scale(1) rotate(0deg);
     }
 }
+
+/* BUTTON */
 
 .roll-btn{
     width:100%;
     border:none;
-    border-radius:14px;
-    background:#ffe500;
+    border-radius:8px;
+    background:#ffe600;
     color:white;
     font-family:'Luckiest Guy', cursive;
-    font-size:42px;
-    padding:18px;
+    font-size:28px;
+    padding:14px;
     cursor:pointer;
-    text-shadow:3px 3px 0 rgba(0,0,0,.2);
-    border:5px solid rgba(255,255,255,.6);
-    box-shadow:0 6px 0 #d0ba00;
-    transition:.15s;
-}
-
-.roll-btn:hover{
-    transform:translateY(-2px);
+    text-shadow:0 3px 0 rgba(0,0,0,.25);
+    box-shadow:0 5px 0 #d6b800;
 }
 
 .roll-btn:active{
-    transform:translateY(5px);
-    box-shadow:none;
+    transform:translateY(3px);
+    box-shadow:0 2px 0 #d6b800;
 }
 
-.info{
-    margin-top:18px;
-    text-align:center;
-    font-size:20px;
-    line-height:1.6;
+/* HISTORY */
+
+.history{
+    width:95%;
+    max-width:420px;
+    margin:25px auto;
+    background:rgba(255,255,255,.08);
+    border:3px solid rgba(255,255,255,.25);
+    border-radius:20px;
+    padding:22px;
 }
 
-.red{color:red;}
-.orange{color:orange;}
-.yellow{color:yellow;}
-.green{color:green;}
-.blue{color:blue;}
-.purple{color:purple;}
-
-.history-title{
-    font-family:'Luckiest Guy', cursive;
-    text-align:center;
-    font-size:54px;
-    margin-bottom:25px;
-    text-shadow:4px 4px 0 rgba(0,0,0,.15);
-}
-
-.history-item{
+.history-row{
     display:flex;
     align-items:center;
-    gap:18px;
-    padding:18px 0;
-    border-bottom:2px dashed rgba(255,255,255,.4);
+    gap:8px;
+    padding:12px 0;
+    border-bottom:1px dashed rgba(255,255,255,.45);
 }
 
-.roll-number{
-    font-size:40px;
-    font-family:'Luckiest Guy', cursive;
-    width:60px;
-}
-
-.history-dice{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.small-die{
-    width:42px;
-    height:42px;
-    border-radius:10px;
-    border:4px solid white;
+.small-dice{
+    width:28px;
+    height:28px;
+    border-radius:7px;
+    border:3px solid white;
     position:relative;
 }
 
-.small-die .dot{
-    width:9px;
-    height:9px;
+.small-dice::after{
+    content:'';
+    position:absolute;
+    width:7px;
+    height:7px;
+    background:white;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
 }
 
-.secret-menu{
-    display:none;
-    margin-top:25px;
-    background:rgba(0,0,0,.25);
-    padding:20px;
-    border-radius:18px;
-}
+/* MOBILE */
 
-.secret-menu h2{
-    margin-bottom:15px;
-    font-family:'Luckiest Guy', cursive;
-    letter-spacing:1px;
-}
+@media(max-width:600px){
 
-.secret-menu button{
-    padding:12px 16px;
-    border:none;
-    border-radius:10px;
-    margin:5px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-@media(max-width:700px){
-
-    .die{
-        width:85px;
-        height:85px;
-        border-width:6px;
+    .logo{
+        font-size:48px;
     }
 
-    .title{
-        font-size:34px;
+    .subtitle{
+        font-size:20px;
     }
 
-    .history-title{
-        font-size:40px;
-    }
-
-    .roll-btn{
-        font-size:30px;
+    .dice{
+        width:64px;
+        height:64px;
     }
 
     .controls{
-        flex-direction:column;
+        gap:6px;
     }
 
     select{
         width:100%;
+        font-size:13px;
     }
 
-    .dice-area{
-        gap:14px;
+    .roll-btn{
+        font-size:22px;
     }
+
 }
+
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="top">
+    <div class="logo">ONLINE DICE</div>
+    <div class="subtitle">VIRTUAL DICE SIMULATOR</div>
+</div>
 
-<img class="logo" src="https://www.online-dice.com/img/logo-online-dice.png">
+<div class="box">
 
-<div class="card main-card">
+    <div class="section-title">
+        ROLL COLOR DICE
+    </div>
 
-<h1 class="title">ROLL COLOR DICE</h1>
+    <div class="controls">
+        <select>
+            <option>4 DICE</option>
+        </select>
 
-<div class="controls">
+        <select>
+            <option>COLOR</option>
+        </select>
 
-<select id="diceCount">
-<option value="1">1 DICE</option>
-<option value="2">2 DICE</option>
-<option value="3">3 DICE</option>
-<option value="4" selected>4 DICE</option>
-<option value="5">5 DICE</option>
-<option value="6">6 DICE</option>
-</select>
+        <select>
+            <option>SELECT 1</option>
+        </select>
+    </div>
 
-<select id="mode">
-<option>COLOR DICE</option>
-</select>
+    <div class="dice-container" id="diceContainer">
 
-<select id="selectMode">
-<option>SELECT 1</option>
-</select>
+        <div class="dice blue"></div>
+        <div class="dice green"></div>
+        <div class="dice red"></div>
+        <div class="dice orange"></div>
+
+    </div>
+
+    <button class="roll-btn" onclick="rollDice()">
+        ROLL AGAIN !
+    </button>
 
 </div>
 
-<div class="dice-area" id="diceArea"></div>
+<div class="history">
 
-<button class="roll-btn" onclick="rollDice()">
-ROLL AGAIN !
+    <div class="section-title">
+        YOUR LAST 20 ROLLS:
+    </div>
+
+    <div id="historyList"></div>
+
+</div>
+
+<!-- SECRET MENU -->
+
+<div id="secretMenu" style="
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#111;
+padding:20px;
+border-radius:14px;
+z-index:99999;
+">
+
+<h2 style="margin-bottom:15px;">Hidden Menu</h2>
+
+<button onclick="setForced('red')">Red</button>
+<button onclick="setForced('blue')">Blue</button>
+<button onclick="setForced('green')">Green</button>
+<button onclick="setForced('yellow')">Yellow</button>
+<button onclick="setForced('orange')">Orange</button>
+<button onclick="setForced('purple')">Purple</button>
+
+<br><br>
+
+<button onclick="
+document.getElementById('secretMenu').style.display='none'
+">
+Close
 </button>
-
-<div class="info">
-Possible colors are:
-<span class="red">Red</span>,
-<span class="orange">Orange</span>,
-<span class="yellow">Yellow</span>,
-<span class="green">Green</span>,
-<span class="blue">Blue</span>
-and
-<span class="purple">Purple</span>.
-</div>
-
-<div class="secret-menu" id="secretMenu">
-
-<h2>Secret Menu</h2>
-
-<p style="margin-bottom:15px;">
-Choose what color shows up more often.
-</p>
-
-<button onclick="setRig('red')">Red</button>
-<button onclick="setRig('orange')">Orange</button>
-<button onclick="setRig('yellow')">Yellow</button>
-<button onclick="setRig('green')">Green</button>
-<button onclick="setRig('blue')">Blue</button>
-<button onclick="setRig('purple')">Purple</button>
-<button onclick="setRig(null)">Normal</button>
-
-</div>
-
-</div>
-
-<div class="card history-card">
-
-<h1 class="history-title">YOUR LAST 20 ROLLS:</h1>
-
-<div id="history"></div>
-
-</div>
 
 </div>
 
 <script>
 
 const colors = [
-"red",
-"orange",
-"yellow",
-"green",
-"blue",
-"purple"
+'red',
+'blue',
+'green',
+'yellow',
+'orange',
+'purple'
 ];
 
-let historyRolls = [];
-let riggedColor = null;
+let forcedColor = null;
 
-const diceArea = document.getElementById("diceArea");
-const historyDiv = document.getElementById("history");
-
-function createDie(color){
-
-    const die = document.createElement("div");
-    die.className = "die";
-    die.style.background = color;
-
-    const dot = document.createElement("div");
-    dot.className = "dot";
-
-    die.appendChild(dot);
-
-    return die;
+function setForced(color){
+    forcedColor = color;
 }
 
-function createSmallDie(color){
+document.addEventListener('keydown', e => {
 
-    return `
-    <div class="small-die" style="background:${color}">
-        <div class="dot"></div>
-    </div>
-    `;
-}
+    if(e.ctrlKey && e.shiftKey && e.key === 'M'){
 
-function getRandomColor(){
+        const menu = document.getElementById('secretMenu');
 
-    if(riggedColor && Math.random() < 0.55){
-        return riggedColor;
+        menu.style.display =
+        menu.style.display === 'block'
+        ? 'none'
+        : 'block';
     }
+});
 
-    return colors[Math.floor(Math.random() * colors.length)];
-}
+const historyList = document.getElementById('historyList');
 
 function rollDice(){
 
-    diceArea.innerHTML = "";
+    const dice = document.querySelectorAll('.dice');
 
-    const count = parseInt(
-        document.getElementById("diceCount").value
-    );
+    let row = document.createElement('div');
+    row.className = 'history-row';
 
-    const roll = [];
+    dice.forEach(die => {
 
-    for(let i=0;i<count;i++){
+        die.classList.add('rolling');
 
-        const color = getRandomColor();
+        setTimeout(() => {
 
-        roll.push(color);
+            die.className = 'dice';
 
-        const die = createDie(color);
+            const color =
+            forcedColor ||
+            colors[Math.floor(Math.random()*colors.length)];
 
-        die.classList.add("roll-animation");
+            die.classList.add(color);
 
-        diceArea.appendChild(die);
-    }
+            let small = document.createElement('div');
+            small.className = 'small-dice ' + color;
 
-    historyRolls.unshift(roll);
+            row.appendChild(small);
 
-    if(historyRolls.length > 20){
-        historyRolls.pop();
-    }
+        }, 250);
 
-    updateHistory();
-}
+        setTimeout(() => {
+            die.classList.remove('rolling');
+        }, 450);
 
-function updateHistory(){
-
-    historyDiv.innerHTML = "";
-
-    historyRolls.forEach((roll,index)=>{
-
-        const row = document.createElement("div");
-        row.className = "history-item";
-
-        row.innerHTML = `
-        <div class="roll-number">${index+1}.</div>
-
-        <div class="history-dice">
-            ${roll.map(c=>createSmallDie(c)).join("")}
-        </div>
-        `;
-
-        historyDiv.appendChild(row);
     });
+
+    setTimeout(() => {
+
+        historyList.prepend(row);
+
+        while(historyList.children.length > 20){
+            historyList.removeChild(historyList.lastChild);
+        }
+
+    }, 300);
+
 }
-
-function setRig(color){
-
-    riggedColor = color;
-
-    if(color){
-        alert("Rigged toward " + color);
-    }else{
-        alert("Normal mode enabled");
-    }
-}
-
-let tapCount = 0;
-
-document.querySelector(".logo").addEventListener("click",()=>{
-
-    tapCount++;
-
-    if(tapCount >= 5){
-
-        document.getElementById("secretMenu").style.display = "block";
-
-        tapCount = 0;
-    }
-
-    setTimeout(()=>{
-        tapCount = 0;
-    },2000);
-
-});
-
-rollDice();
 
 </script>
 
